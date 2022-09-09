@@ -47,8 +47,9 @@ wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNot
 
 
 #Recorrer Dias
-k = 2
+
 try:
+    k = 2
     while k < 1000:
         clickListaDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
         clickDia = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).click()
@@ -170,8 +171,8 @@ try:
 
         except: 
             print('No hay más días')
-     
-     
+            k=k+1 
+            
 except:
     print('listo')
     workbook.close()
