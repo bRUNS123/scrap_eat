@@ -43,9 +43,18 @@ time.sleep(5)
 #Wait
 wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
+
+#Extraer nombre del primer día
+diaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option[2]'))).text
+capitlizeDia = diaInfo.title()
+formatearDia = capitlizeDia.replace(" ", "")
+sinComa = formatearDia.replace(",", "")
+diafinal = sinComa.replace('-TurnoUnico', '')
+print(diafinal)
+
 #Crear Excel
 # Create an new Excel file and add a worksheet.
-workbook = xlsxwriter.Workbook('dato.xlsx')
+workbook = xlsxwriter.Workbook(f'{diafinal}.xlsx')
 worksheet = workbook.add_worksheet()
 
 # Widen the first column to make the text clearer.
@@ -55,9 +64,6 @@ worksheet.set_column('C:C', 13)
 worksheet.set_column('D:D', 28)
 worksheet.set_column('E:E', 25)
 worksheet.set_column('G:G', 20)
-
-
-
 
 
 
@@ -71,23 +77,12 @@ worksheet.write('C1', 'Venta Bruto', bold)
 worksheet.write('D1', 'Garzon', bold)
 worksheet.write('E1', 'Comanda', bold)
 worksheet.write('F1', 'Mesa', bold)
-# worksheet.write(0, 6, 'Item1', bold)
-# worksheet.write(0, 7, 'Item2', bold)
 
 
 
 #Lista de comandas (para no repetir)
 comandaList = []
 comandaListCompleta = []
-
-#Ir a la comanda anterior.
-clickDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
-clickDiaAnterior = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option[3]'))).click()
-DiaAnteriorInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option[3]'))).text
-
-time.sleep(2)
-
-
 
 
 
@@ -103,9 +98,9 @@ try:
     
         diaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option[2]'))).text
         diaInfo = diaInfo.replace(' - Turno Unico', '')
-        diaInfoAnterior = DiaAnteriorInfo.replace(' - Turno Unico', '')
+        # diaInfoAnterior = DiaAnteriorInfo.replace(' - Turno Unico', '')
 
-        worksheet.write(f'A{celda}', diaInfoAnterior)
+        worksheet.write(f'A{celda}', diaInfo)
 
       
         #Información general
