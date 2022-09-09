@@ -47,9 +47,8 @@ wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNot
 
 
 #Recorrer Dias
-
+k = 2
 try:
-    k = 2
     while k < 1000:
         clickListaDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
         clickDia = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).click()
@@ -133,7 +132,6 @@ try:
                             while j < 1000:
             
                                 itemsInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[3]/div/div[2]/div[2]/div[2]/div['+str(itemContador)+']/div/span[2]'))).text 
-                                print(itemsInfo)
                                 worksheet.write(itemFilaContador, columnaItem, itemsInfo)
                                 worksheet.write(0, columnaItem, f'Item{itemContador}', bold)
                                 columnaItem = columnaItem+1
@@ -151,7 +149,7 @@ try:
                         worksheet.write(f'E{celda}', comandaInfo)
                         worksheet.write(f'F{celda}', mesaInfo)
 
-                        print(comensalesInfo)
+                        # print(comensalesInfo)
                         time.sleep(0.5)
                         regresar = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[3]/div/div[1]/button[1]/span'))).click()
                
@@ -167,12 +165,12 @@ try:
                 except:
                     print('Ya existe la comanda')
 
-
-
         except: 
-            print('No hay más días')
-            k=k+1 
-            
+          print('Se termino el día') 
+
+
+        k=k+1 
+           
 except:
     print('listo')
     workbook.close()
