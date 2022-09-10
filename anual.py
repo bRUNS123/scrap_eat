@@ -170,10 +170,11 @@ try:
 
 
         k=k+1 
+        workbook.close()
+
            
 except:
     print('listo')
-    workbook.close()
 
     # driver.close()
 
