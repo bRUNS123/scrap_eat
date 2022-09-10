@@ -127,7 +127,11 @@ try:
                     j = 2
                     columnaItem = 6
                     while j < 1000:
-            
+
+
+                        # itemsCantidad = len(wait.until(EC.find_elements_by_xpath('//*[@id="reportes"]/div[3]/div/div[2]/div[2]/div[2]/div[2]/div/span[2]')))
+                        # print(f'itemsCantidad: {itemsCantidad}')
+
                         itemsInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[3]/div/div[2]/div[2]/div[2]/div['+str(itemContador)+']/div/span[2]'))).text 
                         print(itemsInfo)
                         worksheet.write(itemFilaContador, columnaItem, itemsInfo)
