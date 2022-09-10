@@ -4,4 +4,5 @@ build
 dato.xlsx
 main.spec
 driver
+main.spec
 *.xlsx

@@ -55,9 +55,6 @@ try:
         DiaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).text
         time.sleep(1)
 
-        if '2021' in DiaInfo:
-            k = 1000
-
         #Formatear dia
         capitlizeDia = DiaInfo.title()
         formatearDia = capitlizeDia.replace(" ", "")
@@ -67,7 +64,7 @@ try:
 
         #Crear Excel
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(f'./anual/{diafinal}.xlsx')
+        workbook = xlsxwriter.Workbook(f'./todos/{diafinal}.xlsx')
         worksheet = workbook.add_worksheet()   
 
         # Darle Ancho a las columnas
