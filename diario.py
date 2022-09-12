@@ -67,6 +67,25 @@ except:
     time.sleep(1.5)
        
 
+#Crear carpetas
+pathAnual = './anual'
+pathDiario = './diario'
+pathTodos = './todos'
+
+if os.path.exists(pathAnual):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathAnual)
+   
+if os.path.exists(pathDiario):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathDiario)
+
+if os.path.exists(pathTodos):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathTodos)
 
     
 

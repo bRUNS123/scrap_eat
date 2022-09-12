@@ -65,6 +65,26 @@ except:
     irReportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[2]/div[5]/span[2]'))).click()
     time.sleep(1.5)
 
+#Crear carpetas
+pathAnual = './anual'
+pathDiario = './diario'
+pathTodos = './todos'
+
+if os.path.exists(pathAnual):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathAnual)
+   
+if os.path.exists(pathDiario):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathDiario)
+
+if os.path.exists(pathTodos):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathTodos)
+
 
 #Recorrer Dias
 k = 2
