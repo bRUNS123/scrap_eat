@@ -43,7 +43,27 @@ time.sleep(5)
 #Wait
 wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
+#Logueo automatico
+try:
+    revisarSiHayTabla = wait.until(EC.element_to_be_clickable((By.XPATH,' //*[@id="tablaDetallePagos"]/tbody/tr[1]/th[2]'))).is_displayed()
 
+except:
+    print('No hay tabla')
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[1]/span[3]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[2]/div[4]/span[2]'))).click()
+    textBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[1]')))
+    passBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[2]')))
+    textBox.send_keys('f.correa.cood@gmail.com')
+    passBox.send_keys('Remotito1')
+    botonClick =wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/button'))).click()
+    time.sleep(1.5)
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    menuIdioma = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[1]/span[3]'))).click() 
+    espanol = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[2]/div[4]/span[1]'))).click()
+    reportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[1]/span[3]'))).click()
+    irReportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[2]/div[5]/span[2]'))).click()
+    time.sleep(1.5)
 
 
 #Recorrer Dias

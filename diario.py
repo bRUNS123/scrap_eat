@@ -17,6 +17,7 @@ import sys
 #Variables
 Chrome_Dir = ".\chromedriver.exe"
 Url = "https://res3.toteat.com/#/reportes/detallepagos"
+UrlLogin = "https://res3.toteat.com/#/logintoteat"
 #f.correa.cood@gmail.com
 #Remotito1
 
@@ -38,11 +39,36 @@ op.add_argument(
     r"user-data-dir={}".format(profile))
 driver = webdriver.Chrome(service=s, options=op)
 driver.get(Url)
-time.sleep(5)
+time.sleep(3)
 
 #Wait
-wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
+wait = WebDriverWait(driver, 4, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
+#Logueo automatico
+try:
+    revisarSiHayTabla = wait.until(EC.element_to_be_clickable((By.XPATH,' //*[@id="tablaDetallePagos"]/tbody/tr[1]/th[2]'))).is_displayed()
+
+except:
+    print('No hay tabla')
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[1]/span[3]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[2]/div[4]/span[2]'))).click()
+    textBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[1]')))
+    passBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[2]')))
+    textBox.send_keys('f.correa.cood@gmail.com')
+    passBox.send_keys('Remotito1')
+    botonClick =wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/button'))).click()
+    time.sleep(1.5)
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    menuIdioma = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[1]/span[3]'))).click() 
+    espanol = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[2]/div[4]/span[1]'))).click()
+    reportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[1]/span[3]'))).click()
+    irReportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[2]/div[5]/span[2]'))).click()
+    time.sleep(1.5)
+       
+
+
+    
 
 #Extraer nombre del primer día
 diaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option[2]'))).text
@@ -84,6 +110,9 @@ worksheet.write('F1', 'Mesa', bold)
 comandaList = []
 comandaListCompleta = []
 
+
+
+   
 
 
 celda = 2

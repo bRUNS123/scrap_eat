@@ -43,17 +43,67 @@ time.sleep(5)
 #Wait
 wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
+#Logueo automatico
+try:
+    revisarSiHayTabla = wait.until(EC.element_to_be_clickable((By.XPATH,' //*[@id="tablaDetallePagos"]/tbody/tr[1]/th[2]'))).is_displayed()
+
+except:
+    print('No hay tabla')
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[1]/span[3]'))).click()
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[2]/div[4]/span[2]'))).click()
+    textBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[1]')))
+    passBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[2]')))
+    textBox.send_keys('f.correa.cood@gmail.com')
+    passBox.send_keys('Remotito1')
+    botonClick =wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/button'))).click()
+    time.sleep(1.5)
+    clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+    menuIdioma = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[1]/span[3]'))).click() 
+    espanol = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[11]/div/div[2]/div[4]/span[1]'))).click()
+    reportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[1]/span[3]'))).click()
+    irReportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[2]/div[5]/span[2]'))).click()
+    time.sleep(1.5)
 
 
+#Crear archivo de texto
+try:
+    f = open("./anual/listafechas.txt", "r")
+    f.close()
+except:
+    f = open("./anual/listafechas.txt", "w")
+    f.close()
 
 #Recorrer Dias
-k = 2
+k = 1
+x = 0
+while x < 1000:
+    clickListaDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
+    # clickDia = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).click()
+    DiaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).text
+
+  
+    with open('./anual/listafechas.txt') as file:
+        
+        
+        if DiaInfo in file.read():
+            
+            k += k
+            x += x
+            print('Fecha encontrada')
+        else:
+            k = k-2
+            print('Fecha no encontrada')
+            x=1001
+
 try:
     while k < 1000:
         clickListaDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
         clickDia = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).click()
         DiaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).text
         time.sleep(1)
+
+   
 
         if '2021' in DiaInfo:
             k = 1000
@@ -173,6 +223,9 @@ try:
 
 
         k=k+1 
+        f = open("./anual/listafechas.txt", "a", encoding='utf-8')
+        f.write(DiaInfo+"\n")
+        f.close()
         workbook.close()
 
            
