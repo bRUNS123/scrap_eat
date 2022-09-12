@@ -110,19 +110,24 @@ while x < 1000:
     if os.path.getsize('./anual/listafechas.txt') != 0:
         with open('./anual/listafechas.txt', encoding='utf-8') as file:
             last_line = file.readlines()[-1]
+            def func(value):
+              return ''.join(value.splitlines())
         
-            print(f'ultima: {last_line}')
-            print(f'actual: {DiaInfo}')
-        
-            if DiaInfo != last_line:  
-                print('No son iguales')
-                k = k + 1
-                x = x + 1  
+   
+            if DiaInfo in func(last_line): 
+            
+                print('Son iguales')
+                break
+                
 
 
             else:
-                print('Son iguales')
-                break
+                print('No son iguales')
+                k = k + 1
+                x = x + 1  
+                
+       
+       
                 # x=1000
     else:
         print('No hay nada en el archivo')
