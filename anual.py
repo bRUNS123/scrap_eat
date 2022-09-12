@@ -38,7 +38,7 @@ op.add_argument(
     r"user-data-dir={}".format(profile))
 driver = webdriver.Chrome(service=s, options=op)
 driver.get(Url)
-time.sleep(5)
+time.sleep(4)
 
 #Wait
 wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
@@ -65,36 +65,68 @@ except:
     irReportes = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[9]/div[2]/div[5]/span[2]'))).click()
     time.sleep(1.5)
 
+#Crear carpetas
+pathAnual = './anual'
+pathDiario = './diario'
+pathTodos = './todos'
+
+if os.path.exists(pathAnual):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathAnual)
+   
+if os.path.exists(pathDiario):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathDiario)
+
+if os.path.exists(pathTodos):
+    print('Ya existe la carpeta')
+else: 
+   os.makedirs(pathTodos)
+
+
+
 
 #Crear archivo de texto
 try:
-    f = open("./anual/listafechas.txt", "r")
+    f = open("./anual/listafechas.txt", "r", encoding='utf-8')
     f.close()
 except:
-    f = open("./anual/listafechas.txt", "w")
+    f = open("./anual/listafechas.txt", "w", encoding='utf-8')
     f.close()
 
+
+
 #Recorrer Dias
-k = 1
+k = 2
 x = 0
 while x < 1000:
+    print(f'parte chekeo: {k}')  
     clickListaDias = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select'))).click()
     # clickDia = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).click()
     DiaInfo = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="reportes"]/div[1]/div/div/div[3]/div/select/option['+str(k)+']'))).text
 
-  
-    with open('./anual/listafechas.txt') as file:
+    if os.path.getsize('./anual/listafechas.txt') != 0:
+        with open('./anual/listafechas.txt', encoding='utf-8') as file:
+            last_line = file.readlines()[-1]
         
+            print(f'ultima: {last_line}')
+            print(f'actual: {DiaInfo}')
         
-        if DiaInfo in file.read():
-            
-            k += k
-            x += x
-            print('Fecha encontrada')
-        else:
-            k = k-2
-            print('Fecha no encontrada')
-            x=1001
+            if DiaInfo != last_line:  
+                print('No son iguales')
+                k = k + 1
+                x = x + 1  
+
+
+            else:
+                print('Son iguales')
+                break
+                # x=1000
+    else:
+        print('No hay nada en el archivo')
+        break
 
 try:
     while k < 1000:
