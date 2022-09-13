@@ -43,6 +43,25 @@ time.sleep(4)
 #Wait
 wait = WebDriverWait(driver, 5, poll_frequency=1, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
+
+try:
+    textoInvalido= wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mensajeSplashContainer"]/div')))
+    
+except:
+    try: 
+        textoInvalido= wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="mensajeSplashContainer"]/div')))
+        clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
+        usuario = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[1]/span[2]'))).click() 
+        cerrarSesion = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[2]/div[3]/span[2]'))).click()
+        
+        print('Elemento encontrado')
+      
+       
+    except:
+        print('No se encontro elemento')   
+
+    
+
 #Logueo automatico
 try:
     revisarSiHayTabla = wait.until(EC.element_to_be_clickable((By.XPATH,' //*[@id="tablaDetallePagos"]/tbody/tr[1]/th[2]'))).is_displayed()
@@ -52,6 +71,8 @@ except:
     clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="toggleMenu"]'))).click()
     clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[1]/span[3]'))).click()
     clickMenu = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="sideBar"]/div[2]/div/div[2]/div[4]/span[2]'))).click()
+    textBoxClear = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[1]'))).clear()
+    passBoxClear = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[2]'))).clear()
     textBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[1]')))
     passBox = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginToteat"]/div[2]/div/div/input[2]')))
     textBox.send_keys('f.correa.cood@gmail.com')
